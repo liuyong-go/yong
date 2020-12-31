@@ -6,6 +6,9 @@ import (
 	"net/http"
 )
 
+//H 输出结构
+type H map[string]interface{}
+
 //Context 上下文
 type Context struct {
 	Writer http.ResponseWriter
@@ -13,9 +16,15 @@ type Context struct {
 	//request info
 	Path       string
 	Method     string
+	Params     map[string]string
 	StatusCode int
 }
 
+//Param 获取参数
+func (c *Context) Param(key string) string {
+	value, _ := c.Params[key]
+	return value
+}
 func newContext(w http.ResponseWriter, req *http.Request) *Context {
 	return &Context{
 		Writer: w,
