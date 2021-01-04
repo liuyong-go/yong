@@ -23,13 +23,17 @@ func InitRoute() *core.Router {
 		})
 	})
 	v1 := r.Group("/v1")
-	v1.Use(middleware.RequestLog)
+	v1.Use(middleware.RequestLog, core.Recovery())
 	{
 		v1.GET("/", func(c *core.Context) {
 			c.HTML(http.StatusOK, "<h1>hello yong group</h1>")
 		})
 		v1.GET("/test", func(c *core.Context) {
 			c.HTML(http.StatusOK, "<h1>hello yong group test</h1>")
+		})
+		v1.GET("/panic", func(c *core.Context) {
+			names := []string{"geektutu"}
+			c.String(http.StatusOK, names[100])
 		})
 	}
 
