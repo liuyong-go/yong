@@ -81,12 +81,17 @@ func (r *pather) handle(c *Context) {
 
 //Router 声明路由结构体
 type Router struct {
+	*RouterGroup
 	router *pather
+	groups []*RouterGroup
 }
 
 //NewRouter core.Router 结构体引用
 func NewRouter() *Router {
-	return &Router{router: newPather()}
+	router := &Router{router: newPather()}
+	router.RouterGroup = &RouterGroup{router: router}
+	router.groups = []*RouterGroup{router.RouterGroup}
+	return router
 }
 func (engine *Router) addRouter(method string, pattern string, handler HandlerFunc) {
 	engine.router.addRouter(method, pattern, handler)

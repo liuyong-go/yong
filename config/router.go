@@ -21,5 +21,12 @@ func InitRoute() *core.Router {
 			"action":   c.Param("action"),
 		})
 	})
+	v1 := r.Group("/v1")
+	v1.GET("/", func(c *core.Context) {
+		c.HTML(http.StatusOK, "<h1>hello yong group</h1>")
+	})
+	v1.GET("/test", func(c *core.Context) {
+		c.HTML(http.StatusOK, "<h1>hello yong group test</h1>")
+	})
 	return r
 }
