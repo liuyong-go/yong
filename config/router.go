@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/liuyong-go/yong/core"
+	"github.com/liuyong-go/yong/middleware"
 )
 
 //InitRoute 初始化路由
@@ -22,11 +23,15 @@ func InitRoute() *core.Router {
 		})
 	})
 	v1 := r.Group("/v1")
-	v1.GET("/", func(c *core.Context) {
-		c.HTML(http.StatusOK, "<h1>hello yong group</h1>")
-	})
-	v1.GET("/test", func(c *core.Context) {
-		c.HTML(http.StatusOK, "<h1>hello yong group test</h1>")
-	})
+	v1.Use(middleware.RequestLog)
+	{
+		v1.GET("/", func(c *core.Context) {
+			c.HTML(http.StatusOK, "<h1>hello yong group</h1>")
+		})
+		v1.GET("/test", func(c *core.Context) {
+			c.HTML(http.StatusOK, "<h1>hello yong group test</h1>")
+		})
+	}
+
 	return r
 }

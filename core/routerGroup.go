@@ -2,10 +2,10 @@ package core
 
 //RouterGroup 路由组
 type RouterGroup struct {
-	prefix     string
-	middleware []HandlerFunc
-	parent     *RouterGroup
-	router     *Router
+	prefix      string
+	middlewares []HandlerFunc
+	parent      *RouterGroup
+	router      *Router
 }
 
 //Group 创建分组
@@ -32,4 +32,9 @@ func (group *RouterGroup) GET(pattern string, handler HandlerFunc) {
 // POST defines the method to add POST request
 func (group *RouterGroup) POST(pattern string, handler HandlerFunc) {
 	group.addRoute("POST", pattern, handler)
+}
+
+//Use 指定使用中间件
+func (group *RouterGroup) Use(middlewares ...HandlerFunc) {
+	group.middlewares = append(group.middlewares, middlewares...)
 }
