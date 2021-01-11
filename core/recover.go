@@ -14,7 +14,7 @@ func Recovery() HandlerFunc {
 		defer func() {
 			if err := recover(); err != nil {
 				message := fmt.Sprintf("%s", err)
-				log.Print("%s\n\n", trace(message))
+				log.Printf("%s\n\n", trace(message))
 				c.HTML(http.StatusOK, "<h1>wrong</h1>")
 			}
 
