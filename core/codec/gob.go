@@ -15,7 +15,7 @@ type GobCodec struct {
 	enc  *gob.Encoder
 }
 
-var _Codec = (*GobCodec)(nil)
+var _ Codec = (*GobCodec)(nil)
 
 //NewGobCodec 实例化bob编码
 func NewGobCodec(conn io.ReadWriteCloser) Codec {
